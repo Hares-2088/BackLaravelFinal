@@ -18,11 +18,6 @@ return new class extends Migration
             $table->binary('image')->nullable();
             $table->double('price');
             $table->timestamps();
-            $table->integer('category_id')->unsigned();
-            $table->foreign('category_id')
-                    ->references('id')
-                    ->on('categories')
-                    ->onCascade('delete');
         });
     }
 

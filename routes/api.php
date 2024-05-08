@@ -1,16 +1,12 @@
 <?php
+use App\Http\Controllers\ItemController;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PageController;
 use App\Http\Controllers\UserController;
-use App\Models\User;
 use Laravel\Sanctum\PersonalAccessToken;
+use App\Http\Controllers\ShoppingCartController;
 
-/**ALL APIs in this file (api.php) need the api prefix, for example:
-* http:localhost:8000/api/sanctum/csrf-cookie
-* http:localhost:8000/api/ext/setCategory 
-*/
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -22,22 +18,25 @@ Route::get('/sanctum/csrf-cookie', function (Request $request) {
 });
 
 
-Route::post('/ext/setCategory', [PageController::class, 'setCategory']);
-Route::get('/ext/getCategories', [PageController::class, 'getCategories']);
+Route::post('/ext/setItem', [ItemController::class, 'setItem']);
+Route::get('/ext/getItems', [ItemController::class, 'getItems']);
+Route::get('/ext/getItem/{search}', [ItemController::class, 'getItem']);
+Route::get('/ext/getTheItemByName/{name}', [ItemController::class, 'getTheItemByName']);
+Route::get('/ext/getCategoryByItem/{search}', [ItemController::class, 'getCategoryByItem']);
 
 
-Route::post('/ext/setItem', [PageController::class, 'setItem']);
-Route::get('/ext/getItems', [PageController::class, 'getItems']);
-
-Route::get('/ext/getItem/{search}', [PageController::class, 'getItem']);
-Route::get('/ext/getItemsByCategory/{search}', [PageController::class, 'getItemsByCategory']);
-Route::get('/ext/getCategoryByItem/{search}', [PageController::class, 'getCategoryByItem']);
+// Define routes for ShoppingCartController
+Route::post('/ext/add-to-cart', [ShoppingCartController::class, 'addToCart']);
+Route::post('/ext/remove-from-cart/{user_id}/{item_id}', [ShoppingCartController::class, 'removeFromCart']);
+Route::get('/ext/user-cart/{user_id}', [ShoppingCartController::class, 'getUserCart']);
 
 //UserController
 Route::get('/ext/getUsers', [UserController::class, 'getUsers']);
 Route::post('/ext/setUser', [UserController::class, 'setUser']);
 Route::get('/ext/user/{id}', [UserController::class, 'getUserById']);
 Route::post('/ext/loginUser/', [UserController::class, 'loginUser']);
+Route::post('ext/users/{userId}/set-id', [UserController::class, 'setUserId']);
+
 Route::get('/ext/logoutUser/', function (Request $request) {
     $sessionId = $request->session()->getId();
     
