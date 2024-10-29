@@ -5,6 +5,8 @@ Welcome to the **ShoppingCart Back End**! This application was developed as my f
 
 > **Note:** This repository contains only the backend portion of the application.
 
+**🔗 Backend Repository:** [ShoppingCart Backend](https://github.com/Hares-2088/ShoppingCart_FE)
+
 ---
 
 ## ⚙️ Configuration Steps
